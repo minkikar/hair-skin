@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | Hair & Skin Admin{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <h1>Dashboard</h1>
+        <p>Monitor products and recommendation activity in one place.</p>
+    </div>
+    <a class="button" href="{% url 'product_create' %}">Add Product</a>
+</section>
+
+<section class="stats-grid">
+    <div class="card">
+        <h3>Total Products</h3>
+        <p class="stat">{{ product_count }}</p>
+    </div>
+    <div class="card">
+        <h3>Total Recommendations</h3>
+        <p class="stat">{{ recommendation_count }}</p>
+    </div>
+</section>
+
+<section class="card">
+    <h2>Top Recommended Products</h2>
+    {% if top_products %}
+        <ul class="top-list">
+            {% for product in top_products %}
+                <li>
+                    <div>
+                        <strong>{{ product.name }}</strong>
+                        <span>{{ product.get_category_display }} · {{ product.product_type }}</span>
+                    </div>
+                    <span class="pill">{{ product.reco_count }} recommendations</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="muted">No recommendations yet. Add some to see trends.</p>
+    {% endif %}
+</section>
+{% endblock %}
